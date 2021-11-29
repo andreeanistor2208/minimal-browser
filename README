@@ -1,0 +1,85 @@
+Nistor Andreea Iuliana - 313 CB
+	- Tema 2 -
+
+Am creat următoarele structuri pe care le-am folosit în rezolvarea temei:
+	
+	struct webPage - pentru resursele unei pagini web
+	struct nodGeneric
+	struct nodPrioGeneric
+	struct queue - coada istoricului global
+	struct priority_queue - coada de priorități a descărcărilor
+	struct stiva
+	struct tab
+	struct nodtab
+	typedef struct listatab - lista de taburi denumită Browser
+
+	În int main am definit lista de taburi explorer, am inițializat
+coada istoricului global și cea de priorități folosind funcțiile initQ și
+respectiv initPQ. Am creat un tab pentru a-l avea pe cel mereu deschis.
+Comenzile au fost citite cu getline, fiind reallizate de următoarele funcții:
+
+	set_band(int *bw, int val) - Setează valoarea bandwidth-ului.
+
+	createTab(Browser *explorer) - Creează un nou tab gol și îl adaugă
+în lista de taburi, pe care îl și setează ca fiind tabul curent.
+
+	deltab(Browser *explorer) - Șterge ultimul tab deschis. Apelăm funcția
+elibereazaPagina daca este singurul tab deschis. Altfel, apelăm funcția
+eliminaUltimNod care va șterge ultimul nod din lista de taburi.
+
+	change_tab(Browser *explorer, int nr) - Schimbă tabul curent.
+
+	print_open_tabs(Browser *explorer, FILE *fout) - Afișează lista cu
+informații despre taburile deschise în formatul cerut.
+
+	gotoPage(Browser *explorer, const char* url, FILE *fout,
+										long unsigned bandwidth)
+	- deschide in tabul curent pagina cu url-ul cerut. 
+	Dacă există o pagină deschisă, este pusă în stiva de back folosind
+funcția pushStiva(&explorer->tabCurrent->Tab.back_stack, nou). Pentru a
+face să treacă o unitate de timp la fiecare folosire a acestei comenzi
+am implementat funcția void wait(Browser* explorer, int nr, int bandwidth).
+Este golită stiva de forward cu elibereazaPagina.
+
+	back(Browser *explorer, FILE *fout) - Scoate din vârful stivei de back
+a tabului curent o pagină web.
+
+	forward(Browser *explorer, FILE *fout) - Scoate din vârful stivei de
+forward a tabului curent o pagină web.
+
+	history(Browser* explorer, FILE *fout) - Afișează istoricul global al
+browserului.
+
+	del_history(Browser* explorer, int nr) - Șterge din istoricul global de
+navigare al browserului primele adrese accesate.
+
+	lista_dl(Browser* explorer, FILE* fout) - Afișează resursele descărcabile
+din pagina curentă in formatul cerut.
+
+	download(Browser *explorer, int index) - Realizează o copie a obiectului
+de tip resursă aflat la poziția index ​în vectorul de resurse a paginii
+curente, pe care o adaugă în coada de priorități.
+
+	print_downloads(Browser* explorer, FILE *fout) - Afișează istoricul
+descărcărilor din browser, mai întâi pe cele nefinalizate, iar apoi pe cele
+finalizate, cu formatul dat.
+
+	Cazuri speciale:
+	
+	Testul 30 al checker-ului încearcă descărcarea unei resurse dintr-un tab
+în care nu a fost accesată nicio pagină.
+
+	Implementare:
+	
+	Întregul enunț al temei a fost implemetat.
+
+	Compilare și rulare:
+	
+	Makefile-ul conține 3 reguli: build, run și clean.
+	Comanda make build va compila programul, 
+rularea acestuia se face folosind ./tema2 <in_file> <out_file>.
+
+	Checker:
+
+	Punctaj total 85.0/85.0
+	Punctaj valgrind 20.0/20.0
